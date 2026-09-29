@@ -9,12 +9,12 @@
     <a-scene 
       mindar-image="imageTargetSrc: ./imagen.mind;" 
       color-space="sRGB" 
-      renderer="colorManagement: true, physicallyCorrectLights" 
+      renderer="colorManagement: true, physicallyCorrectLights: false" 
       vr-mode-ui="enabled: false" 
       device-orientation-permission-ui="enabled: false">
       
       <a-assets>
-        <video id="my-video" src="./video.mp4" preload="auto" loop="true" crossorigin="anonymous" playsinline webkit-playsinline></video>
+        <video id="my-video" src="./video_bts.mp4" preload="auto" loop="true" crossorigin="anonymous" playsinline webkit-playsinline></video>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
