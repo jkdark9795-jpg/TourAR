@@ -4,8 +4,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <style>
+      #start-btn {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 999;
+        padding: 12px 24px;
+        background: #000;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body style="margin: 0; overflow: hidden;">
+    <button id="start-btn">Toca aquí para iniciar</button>
+
     <a-scene 
       mindar-image="imageTargetSrc: ./imagen.mind;" 
       color-space="sRGB" 
@@ -14,7 +32,7 @@
       device-orientation-permission-ui="enabled: false">
       
       <a-assets>
-        <video id="my-video" src="./video_bts.mp4" preload="auto" loop="true" crossorigin="anonymous" playsinline webkit-playsinline></video>
+        <video id="my-video" src="./video_bts.mp4" preload="auto" loop="true" crossorigin="anonymous" playsinline webkit-playsinline muted></video>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -23,5 +41,16 @@
         <a-video src="#my-video" width="1" height="0.55" position="0 0 0" rotation="0 0 0"></a-video>
       </a-entity>
     </a-scene>
+
+    <script>
+      const btn = document.querySelector('#start-btn');
+      const video = document.querySelector('#my-video');
+
+      btn.addEventListener('click', () => {
+        video.play();
+        video.muted = false;
+        btn.style.display = 'none';
+      });
+    </script>
   </body>
 </html>
