@@ -5,51 +5,92 @@
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
     <style>
-      #start-btn {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 999;
+      /* Estilos generales */
+      body {
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      /* Contenedor de la interfaz de botones */
+      #ui-container {
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        padding: 0 20px;
+      }
+
+      /* Estilo morado estilo BTS/Army */
+      .bts-btn {
+        background: linear-gradient(135deg, #8a2be2, #4b0082);
+        color: #ffffff;
+        border: 2px solid #d8bfd8;
         padding: 12px 24px;
-        background: #000;
-        color: #fff;
-        border: none;
-        border-radius: 20px;
         font-size: 16px;
         font-weight: bold;
+        border-radius: 25px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .bts-btn:hover {
+        background: linear-gradient(135deg, #9932cc, #6a0dad);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6);
+      }
+
+      .bts-btn:active {
+        transform: translateY(1px);
       }
     </style>
   </head>
-  <body style="margin: 0; overflow: hidden;">
-    <button id="start-btn">Toca aquí para iniciar</button>
+  <body>
+    <!-- Interfaz con botones estilizados -->
+    <div id="ui-container">
+      <button id="playBtn" class="bts-btn">▶ Reproducir</button>
+      <button id="stopBtn" class="bts-btn">⏹ Detener</button>
+    </div>
 
     <a-scene 
-      mindar-image="imageTargetSrc: ./imagen.mind;" 
+      mindar-image="imageTargetSrc: ./targets.mind;" 
       color-space="sRGB" 
-      renderer="colorManagement: true, physicallyCorrectLights: false" 
+      renderer="colorManagement: true, physicallyCorrectLights" 
       vr-mode-ui="enabled: false" 
       device-orientation-permission-ui="enabled: false">
       
       <a-assets>
-        <video id="my-video" src="./video_bts.mp4" preload="auto" loop="true" crossorigin="anonymous" playsinline webkit-playsinline muted></video>
+        <video id="myVideo" src="./video.mp4" preload="auto" loop="true" playsinline webkit-playsinline></video>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-video src="#my-video" width="0.9" height="1.4" position="0 0 0" rotation="0 0 0"></a-video>
+        <a-video src="#myVideo" width="0.9" height="1.4" position="0 0 0" rotation="0 0 0"></a-video>
       </a-entity>
     </a-scene>
 
     <script>
-      const btn = document.querySelector('#start-btn');
-      const video = document.querySelector('#my-video');
+      const video = document.querySelector("#myVideo");
+      const playBtn = document.querySelector("#playBtn");
+      const stopBtn = document.querySelector("#stopBtn");
 
-      btn.addEventListener('click', () => {
+      // Botón para reproducir
+      playBtn.addEventListener("click", () => {
         video.play();
-        video.muted = false;
-        btn.style.display = 'none';
+      });
+
+      // Botón para detener y reiniciar
+      stopBtn.addEventListener("click", () => {
+        video.pause();
+        video.currentTime = 0;
       });
     </script>
   </body>
